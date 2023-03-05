@@ -6,8 +6,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const Settings = {
+  cardsCount: 6,
+} as const;
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App cardsCount={Settings.cardsCount}/>
   </React.StrictMode>,
 );
