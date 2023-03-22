@@ -1,6 +1,6 @@
 import { Offer } from '../types/offer';
 
-const AVATAR_URL = 'https://1.pravatar.cc/128';
+const AVATAR_URL = 'https://i.pravatar.cc/128';
 const IMAGES_URL = 'https://12.react.pages.academy/static/hotel/';
 
 export const offers: Offer[] = [

@@ -1,10 +1,11 @@
-import Card from '../../components/card/card';
+import { Offer } from '../../types/offer';
+import ListOfOffers from '../../components/listOfOffers/listOfOffers';
 
 type MainProps = {
-  cardsCount: number;
+  offers: Offer[];
 };
 
-function Main({ cardsCount }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -76,7 +77,7 @@ function Main({ cardsCount }: MainProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {Array(cardsCount).fill(<Card />)}
+              <ListOfOffers offers = {offers} />
             </div>
           </section>
           <div className="cities__right-section">
