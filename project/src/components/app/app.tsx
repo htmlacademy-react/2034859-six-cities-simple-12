@@ -6,20 +6,23 @@ import NotFound from '../notFound/notFound';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import ScrollToTop from '../scrollToTop/scrollToTop';
+import { Offer } from '../../types/offer';
+import { Comment } from '../../types/comment';
 
 type AppProps = {
-  cardsCount: number;
+  offers: Offer[];
+  comments: Comment[];
 };
 
-function App({ cardsCount }: AppProps): JSX.Element {
+function App({ offers, comments }: AppProps): JSX.Element {
   const isLogged = true;
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
         <Route path={AppRoute.Main} element={<Layout isLogged={isLogged} />}>
-          <Route index element={<Main cardsCount={cardsCount} />} />
-          <Route path={AppRoute.Room} element={<Room />} />
+          <Route index element={<Main offers={offers}/>} />
+          <Route path={AppRoute.Room} element={<Room offers={offers} comments={comments}/>} />
           <Route path={AppRoute.Login} element={<Login />} />
         </Route>
         <Route path="*" element={< NotFound />} />
