@@ -1,22 +1,27 @@
 import Card from '../card/card';
 import { Offer } from '../../types/offer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Location } from '../../types/location';
 
 type ListOfOffersProps = {
   offers: Offer[];
-  handleOfferHover:(arg: Location) => void;
+  handleOfferHover: (arg: Location) => void;
+  cssClassOfCard: string;
 };
 
-function ListOfOffers({ offers, handleOfferHover }: ListOfOffersProps): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState(Number);
-  const handleMouseOverCard = (offer : Offer) : void => {
-    setActiveCardId(offer.id);
-    handleOfferHover(offer.location);
+function ListOfOffers({ offers, handleOfferHover, cssClassOfCard }: ListOfOffersProps): JSX.Element {
+  const [activeCard, setActiveCard] = useState<Offer | null>(null);
+  const handleMouseOverCard = (offer: Offer): void => {
+    setActiveCard(offer);
   };
+  useEffect(() => {
+    if (activeCard) {
+      handleOfferHover(activeCard.location);
+    }
+  }, [activeCard]);
   return (
     <>
-      {offers.map((item) => <Card offer={item} activeCardId={activeCardId} handleMouseOverCard={handleMouseOverCard} key={item.id} />)}
+      {offers.map((item) => <Card offer={item} handleMouseOverCard={handleMouseOverCard} cssClassOfCard={cssClassOfCard} key={item.id} />)}
     </>
   );
 }

@@ -11,9 +11,10 @@ type MapProps = {
   city: City;
   points: Location[];
   selectedPoint: Location;
+  cssClassOfMap: string;
 };
 
-function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
+function Map({ city, points, selectedPoint, cssClassOfMap }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -48,7 +49,7 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
 
 
   return (
-    <section className="cities__map map">
+    <section className={`${cssClassOfMap} map`}>
       <div style={{ height: '100%' }} ref={mapRef} />
     </section>
   );

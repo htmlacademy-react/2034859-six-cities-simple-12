@@ -92,13 +92,14 @@ function Main({ offers }: MainProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <ListOfOffers offers={offers} handleOfferHover={onOfferHover} />
+              <ListOfOffers offers={offers} handleOfferHover={onOfferHover} cssClassOfCard={'cities'} />
             </div>
           </section>
           <div className="cities__right-section">
             <Map city={offers[0].city}
               points={pointsOnMap}
               selectedPoint={selectedPoint}
+              cssClassOfMap={'cities__map'}
             />
           </div>
         </div>
