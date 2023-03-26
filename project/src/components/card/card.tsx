@@ -3,24 +3,23 @@ import { Link } from 'react-router-dom';
 
 type CardProps = {
   offer: Offer;
-  activeCardId: number;
   handleMouseOverCard: (arg: Offer) => void;
+  cssClassOfCard: string;
 };
 
 
-function Card({ offer, activeCardId, handleMouseOverCard }: CardProps): JSX.Element {
+function Card({ offer, handleMouseOverCard, cssClassOfCard }: CardProps): JSX.Element {
   const handleMouseOverArticle = () => {
     handleMouseOverCard(offer);
   };
   return (
-    <article onMouseMoveCapture={handleMouseOverArticle} className="cities__card place-card">
-      {activeCardId}
+    <article onMouseMoveCapture={handleMouseOverArticle} className={`${cssClassOfCard}__card place-card`}>
       {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
         : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cssClassOfCard}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
@@ -45,7 +44,7 @@ function Card({ offer, activeCardId, handleMouseOverCard }: CardProps): JSX.Elem
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
