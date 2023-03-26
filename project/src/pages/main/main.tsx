@@ -1,11 +1,26 @@
 import { Offer } from '../../types/offer';
+import Map from '../../components/map/map';
 import ListOfOffers from '../../components/listOfOffers/listOfOffers';
+import { useState } from 'react';
+import { Location } from '../../types/location';
 
 type MainProps = {
   offers: Offer[];
 };
 
 function Main({ offers }: MainProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Location>(offers[0].location);
+  const pointsOnMap = offers.map((offer) => offer.location);
+
+  const onOfferHover = (offerLocation: Location) => {
+    const currentPoint = pointsOnMap.find((point) =>
+      (point.latitude === offerLocation.latitude) && (point.longitude === offerLocation.longitude),
+    );
+    if (currentPoint) {
+      setSelectedPoint(currentPoint);
+    }
+  };
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -77,11 +92,14 @@ function Main({ offers }: MainProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <ListOfOffers offers = {offers} />
+              <ListOfOffers offers={offers} handleOfferHover={onOfferHover} />
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map city={offers[0].city}
+              points={pointsOnMap}
+              selectedPoint={selectedPoint}
+            />
           </div>
         </div>
       </div>

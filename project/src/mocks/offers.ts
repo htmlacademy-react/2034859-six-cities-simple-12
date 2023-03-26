@@ -8,9 +8,9 @@ export const offers: Offer[] = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
+        latitude: 52.373057,
+        longitude: 4.892557,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -29,6 +29,11 @@ export const offers: Offer[] = [
       `${IMAGES_URL}2`,
       `${IMAGES_URL}3`,
     ],
+    location: {
+      latitude: 52.3909553943548,
+      longitude: 4.85309666406158,
+      zoom: 10,
+    },
     isPremium: false,
     maxAdults: 4,
     previewImage: 'img/apartment-small-04.jpg',
@@ -41,9 +46,9 @@ export const offers: Offer[] = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
+        latitude: 52.373057,
+        longitude: 4.892557,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -62,6 +67,11 @@ export const offers: Offer[] = [
       `${IMAGES_URL}5`,
       `${IMAGES_URL}6`,
     ],
+    location: {
+      latitude: 52.57438359,
+      longitude: 4.8530458457,
+      zoom: 10,
+    },
     isPremium: true,
     maxAdults: 4,
     previewImage: 'img/room.jpg',
@@ -74,9 +84,9 @@ export const offers: Offer[] = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
+        latitude: 52.373057,
+        longitude: 4.892557,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -95,6 +105,11 @@ export const offers: Offer[] = [
       `${IMAGES_URL}8`,
       `${IMAGES_URL}9`,
     ],
+    location: {
+      latitude: 52.39095548568,
+      longitude: 4.929309634648,
+      zoom: 10,
+    },
     isPremium: false,
     maxAdults: 1,
     previewImage: 'img/apartment-small-03.jpg',
@@ -107,9 +122,9 @@ export const offers: Offer[] = [
     bedrooms: 6,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
+        latitude: 52.373057,
+        longitude: 4.892557,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -128,6 +143,11 @@ export const offers: Offer[] = [
       `${IMAGES_URL}11`,
       `${IMAGES_URL}12`,
     ],
+    location: {
+      latitude: 52.3574574378,
+      longitude: 4.9293547457,
+      zoom: 10,
+    },
     isPremium: true,
     maxAdults: 8,
     previewImage: 'img/apartment-small-03.jpg',

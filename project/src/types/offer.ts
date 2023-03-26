@@ -1,15 +1,6 @@
 import { User } from './user';
-
-type City = {
-  location: Location;
-  name: string;
-};
-
-type Location = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-};
+import { City } from './city';
+import { Location } from './location';
 
 export type Offer = {
   bedrooms: number;
@@ -22,6 +13,7 @@ export type Offer = {
   isPremium: boolean;
   maxAdults: number;
   previewImage: string;
+  location: Location;
   price: number;
   rating: number;
   title: string;
