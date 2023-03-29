@@ -1,4 +1,5 @@
 import { Offer } from '../types/offer';
+import { CITIES } from '../consts';
 
 const AVATAR_URL = 'https://i.pravatar.cc/128';
 const IMAGES_URL = 'https://12.react.pages.academy/static/hotel/';
@@ -12,7 +13,7 @@ export const offers: Offer[] = [
         longitude: 4.892557,
         zoom: 12,
       },
-      name: 'Amsterdam',
+      name: CITIES[0],
     },
     description:
       'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -50,7 +51,7 @@ export const offers: Offer[] = [
         longitude: 4.892557,
         zoom: 12,
       },
-      name: 'Amsterdam',
+      name: CITIES[0],
     },
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
@@ -88,7 +89,7 @@ export const offers: Offer[] = [
         longitude: 4.892557,
         zoom: 12,
       },
-      name: 'Amsterdam',
+      name: CITIES[2],
     },
     description:
       'ADuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
@@ -126,7 +127,7 @@ export const offers: Offer[] = [
         longitude: 4.892557,
         zoom: 12,
       },
-      name: 'Amsterdam',
+      name: CITIES[1],
     },
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis',
@@ -146,6 +147,120 @@ export const offers: Offer[] = [
     location: {
       latitude: 52.3574574378,
       longitude: 4.9293547457,
+      zoom: 10,
+    },
+    isPremium: true,
+    maxAdults: 8,
+    previewImage: 'img/apartment-small-03.jpg',
+    price: 300,
+    rating: 5.0,
+    title: 'Big Bang Family',
+    type: 'apartment',
+  },
+  {
+    bedrooms: 6,
+    city: {
+      location: {
+        latitude: 56.373057,
+        longitude: 9.892557,
+        zoom: 12,
+      },
+      name: CITIES[3],
+    },
+    description:
+      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis',
+    goods: ['Towels', 'Napkins', 'Lights', 'Coffee machine', 'Kitchen'],
+    host: {
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
+      id: 3,
+      isPro: false,
+      name: 'Maria',
+    },
+    id: 4,
+    images: [
+      `${IMAGES_URL}10`,
+      `${IMAGES_URL}11`,
+      `${IMAGES_URL}12`,
+    ],
+    location: {
+      latitude: 56.3574574378,
+      longitude: 9.9293547457,
+      zoom: 10,
+    },
+    isPremium: true,
+    maxAdults: 8,
+    previewImage: 'img/apartment-small-03.jpg',
+    price: 300,
+    rating: 5.0,
+    title: 'Big Bang Family',
+    type: 'apartment',
+  },
+  {
+    bedrooms: 6,
+    city: {
+      location: {
+        latitude: 11.373057,
+        longitude: 0.892557,
+        zoom: 12,
+      },
+      name: CITIES[4],
+    },
+    description:
+      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis',
+    goods: ['Towels', 'Napkins', 'Lights', 'Coffee machine', 'Kitchen'],
+    host: {
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
+      id: 3,
+      isPro: false,
+      name: 'Maria',
+    },
+    id: 4,
+    images: [
+      `${IMAGES_URL}10`,
+      `${IMAGES_URL}11`,
+      `${IMAGES_URL}12`,
+    ],
+    location: {
+      latitude: 11.3574574378,
+      longitude: 0.9293547457,
+      zoom: 10,
+    },
+    isPremium: true,
+    maxAdults: 8,
+    previewImage: 'img/apartment-small-03.jpg',
+    price: 300,
+    rating: 5.0,
+    title: 'Big Bang Family',
+    type: 'apartment',
+  },
+  {
+    bedrooms: 6,
+    city: {
+      location: {
+        latitude: 56.373057,
+        longitude: 9.892557,
+        zoom: 12,
+      },
+      name: CITIES[5],
+    },
+    description:
+      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis',
+    goods: ['Towels', 'Napkins', 'Lights', 'Coffee machine', 'Kitchen'],
+    host: {
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
+      id: 3,
+      isPro: false,
+      name: 'Maria',
+    },
+    id: 4,
+    images: [
+      `${IMAGES_URL}10`,
+      `${IMAGES_URL}11`,
+      `${IMAGES_URL}12`,
+    ],
+    location: {
+      latitude: 56.3574574378,
+      longitude: 9.9293547457,
       zoom: 10,
     },
     isPremium: true,

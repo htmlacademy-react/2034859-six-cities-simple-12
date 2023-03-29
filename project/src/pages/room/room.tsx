@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/commentForm/commentForm';
 import ListOfComments from '../../components/listOfComments/listOfComments';
 import Map from '../../components/map/map';
-import { Location } from '../../types/location';
-import { useState } from 'react';
 import ListOfOffers from '../../components/listOfOffers/listOfOffers';
 
 type RoomProps = {
@@ -14,21 +12,11 @@ type RoomProps = {
 };
 
 function Room({ offers, comments }: RoomProps): JSX.Element {
+
   const params = useParams();
   const offer = offers.find((item) => item.id === Number(params.id));
 
   const offersNear = offers.slice(0, 3);
-  const offersNearPoints = offersNear.map((item) => item.location);
-  const [selectedPoint, setSelectedPoint] = useState<Location>(offersNear[0].location);
-
-  const onOfferNearHover = (offerNearLocation: Location) => {
-    const currentPoint = offersNearPoints.find((point) =>
-      (point.latitude === offerNearLocation.latitude) && (point.longitude === offerNearLocation.longitude),
-    );
-    if (currentPoint) {
-      setSelectedPoint(currentPoint);
-    }
-  };
 
   if (offer === undefined) {
     return (
@@ -123,8 +111,7 @@ function Room({ offers, comments }: RoomProps): JSX.Element {
           </div>
         </div>
         <Map city={offers[0].city}
-          points={offersNearPoints}
-          selectedPoint={selectedPoint}
+          offers={offersNear}
           cssClassOfMap={'property__map'}
         />
       </section>
@@ -132,7 +119,7 @@ function Room({ offers, comments }: RoomProps): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <ListOfOffers offers={offersNear} handleOfferHover={onOfferNearHover} cssClassOfCard={'near-places'}/>
+            <ListOfOffers offers={offersNear} cssClassOfCard={'near-places'}/>
           </div>
         </section>
       </div>

@@ -1,19 +1,19 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { changeActiveCard } from '../../store/action';
 
 type CardProps = {
   offer: Offer;
-  handleMouseOverCard: (arg: Offer) => void;
   cssClassOfCard: string;
 };
 
 
-function Card({ offer, handleMouseOverCard, cssClassOfCard }: CardProps): JSX.Element {
-  const handleMouseOverArticle = () => {
-    handleMouseOverCard(offer);
-  };
+function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
-    <article onMouseMoveCapture={handleMouseOverArticle} className={`${cssClassOfCard}__card place-card`}>
+    <article onMouseOver={() => dispatch(changeActiveCard(offer))} onMouseOut={() => dispatch(changeActiveCard(null))} className={`${cssClassOfCard}__card place-card`}>
       {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>

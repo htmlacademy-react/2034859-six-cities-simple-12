@@ -1,20 +1,21 @@
 import useMap from '../../hooks/useMap';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../consts';
 import { City } from '../../types/city';
-import { Location } from '../../types/location';
+import { Offer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
 
 
 type MapProps = {
   city: City;
-  points: Location[];
-  selectedPoint: Location;
+  offers: Offer[];
   cssClassOfMap: string;
 };
 
-function Map({ city, points, selectedPoint, cssClassOfMap }: MapProps): JSX.Element {
+function Map({ city, offers, cssClassOfMap }: MapProps): JSX.Element {
+  const selectedOffer = useAppSelector((state) => state.activeCard);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -32,21 +33,35 @@ function Map({ city, points, selectedPoint, cssClassOfMap }: MapProps): JSX.Elem
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
+      map.flyTo(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom,
+        { animate: true, duration: 2 }
+      );
+    }
+  }, [map, city]);
+
+  useEffect(() => {
+    const markers = leaflet.layerGroup();
+    if (map) {
+      offers.forEach((offer) => {
         leaflet
           .marker({
-            lat: point.latitude,
-            lng: point.longitude,
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
           }, {
-            icon: ((point.latitude === selectedPoint.latitude) && (point.longitude === selectedPoint.longitude))
+            icon: (selectedOffer?.id && offer.id === selectedOffer.id)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(markers);
       });
+      markers.addTo(map);
     }
-  }, [map, points, selectedPoint]);
-
+    return (() => {
+      markers.clearLayers();
+    });
+  }, [map, offers, selectedOffer]);
 
   return (
     <section className={`${cssClassOfMap} map`}>

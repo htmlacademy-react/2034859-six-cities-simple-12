@@ -21,7 +21,7 @@ function App({ offers, comments }: AppProps): JSX.Element {
       <ScrollToTop />
       <Routes>
         <Route path={AppRoute.Main} element={<Layout isLogged={isLogged} />}>
-          <Route index element={<Main offers={offers}/>} />
+          <Route index element={<Main/>} />
           <Route path={AppRoute.Room} element={<Room offers={offers} comments={comments}/>} />
           <Route path={AppRoute.Login} element={<Login />} />
         </Route>
