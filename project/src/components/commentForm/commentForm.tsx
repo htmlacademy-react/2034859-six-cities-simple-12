@@ -1,6 +1,3 @@
-// type CommentFormProps = {
-// };
-
 import { ChangeEvent, useState } from 'react';
 
 

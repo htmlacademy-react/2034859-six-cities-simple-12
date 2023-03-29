@@ -27,7 +27,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): leafl
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [mapRef, map, city]);
 
   return map;
 }
