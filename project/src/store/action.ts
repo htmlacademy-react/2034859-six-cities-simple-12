@@ -24,3 +24,5 @@ export const sortOffers = createAction('sort/sortOffers', (sortData: SortData) =
   payload: sortData,
 }));
 
+export const loadOffers = createAction<Offer[]>('api/loadOffer');
+

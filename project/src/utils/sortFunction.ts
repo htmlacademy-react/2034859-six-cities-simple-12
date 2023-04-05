@@ -1,4 +1,4 @@
-import { Offer } from './types/offer';
+import { Offer } from '../types/offer';
 
 
 export const sortFunction = (offers: Offer[], sortingValue: keyof Offer, lowToHight: boolean) => {
