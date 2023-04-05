@@ -14,7 +14,7 @@ function OffersMainSection(): JSX.Element {
       <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
       <SortingForm />
       <div className="cities__places-list places__list tabs__content">
-        <ListOfOffers offers={currentOffers} cssClassOfCard='cities'/>
+        <ListOfOffers offers={currentOffers} cssClassOfCard='cities' />
       </div>
     </>
   );

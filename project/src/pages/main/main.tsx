@@ -7,6 +7,8 @@ import CitiesNav from '../../components/citiesNav/citiesNav';
 
 
 function Main(): JSX.Element {
+
+
   const currentCity = useAppSelector((state) => state.currentCity);
   const currentOffers = useAppSelector((state) => state.currentOffers);
 
@@ -17,7 +19,6 @@ function Main(): JSX.Element {
     dispatch(changeActiveCity(city));
     dispatch(getOffersFromCity());
   };
-
 
   return (
     <main className="page__main page__main--index">
