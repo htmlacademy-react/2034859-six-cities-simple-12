@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutAction } from '../../store/api-actions';
 
 type NavProps = {
   isLogged: boolean;
 };
 
 function Nav({ isLogged }: NavProps): JSX.Element {
+
+
+  const userData = useAppSelector((state) => state.userData);
+
+  const dispatch = useAppDispatch();
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -16,12 +23,16 @@ function Nav({ isLogged }: NavProps): JSX.Element {
               <div className="header__nav-profile">
                 <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                 <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
+                  {userData?.name}
                 </span>
               </div>
             </li>
             <li className="header__nav-item">
-              <Link to={AppRoute.Login} className="header__nav-link">
+              <Link className="header__nav-link" onClick={(evt) => {
+                evt.preventDefault();
+                dispatch(logoutAction());
+              } } to={''}
+              >
                 <span className="header__signout">Sign out</span>
               </Link>
             </li>

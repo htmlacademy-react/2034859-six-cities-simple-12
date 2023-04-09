@@ -1,32 +1,37 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeActiveCity, getOffersFromCity, changeActiveCard, changeTypeOfSorting, sortOffers, loadOffers } from './action';
+import { changeActiveCity, getOffersFromCity, changeActiveCard, changeTypeOfSorting, sortOffers, loadOffers, requireAuthorization, setUserData } from './action';
 import { Offer } from '../types/offer';
 import { sortFunction } from '../utils/sortFunction';
 import { SortData } from '../types/sortData';
-import { SortInfo } from '../consts';
+import { AuthorizationStatus, SortInfo } from '../consts';
+import { UserData } from '../types/userData';
 
 const defaultCity = 'Paris';
 const defaultSearch = 'Popular';
 const defaultTypeOfSorting = SortInfo[0];
 
 type InitialState = {
-  isDataLoading: boolean;
+  isDataLoad: boolean;
   currentCity: string;
   currentOffers: Offer[];
   defaultSortOffers: Offer[];
   activeCard: Offer | null;
   typeOfSorting: SortData;
   allOffers: Offer[];
+  authorizationStatus: AuthorizationStatus;
+  userData: UserData | null;
 };
 
 const initialState: InitialState = {
-  isDataLoading: false,
+  isDataLoad: false,
   currentCity: defaultCity,
   currentOffers: [],
   defaultSortOffers: [],
   activeCard: null,
   typeOfSorting: defaultTypeOfSorting,
   allOffers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userData: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -57,7 +62,13 @@ const reducer = createReducer(initialState, (builder) => {
       const initialOffers = state.allOffers.filter((item) => item.city.name === state.currentCity);
       state.defaultSortOffers = initialOffers;
       state.currentOffers = initialOffers;
-      state.isDataLoading = true;
+      state.isDataLoad = true;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
 

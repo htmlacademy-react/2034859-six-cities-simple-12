@@ -3,12 +3,15 @@ import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import Layout from '../layout/layot';
 import NotFound from '../notFound/notFound';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../consts';
 import ScrollToTop from '../scrollToTop/scrollToTop';
 import { Offer } from '../../types/offer';
 import { Comment } from '../../types/comment';
 import { useAppSelector } from '../../hooks';
+import { useEffect, useState } from 'react';
+import HistoryRouter from '../historyRoute/historyRoute';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   offers: Offer[];
@@ -17,11 +20,20 @@ type AppProps = {
 
 
 function App({ offers, comments }: AppProps): JSX.Element {
-  const isLogged = true;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const isDataLoad = useAppSelector((state) => state.isDataLoad);
+  const [isLogged, setIsLogged] = useState((false));
 
-  if (isDataLoading === false) {
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, [authorizationStatus]);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoad) {
     return (
       <div className="load-area">
         <div className="load-area__spinner">
@@ -30,7 +42,7 @@ function App({ offers, comments }: AppProps): JSX.Element {
     );
   }
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <ScrollToTop />
       <Routes>
         <Route path={AppRoute.Main} element={<Layout isLogged={isLogged} />}>
@@ -40,7 +52,7 @@ function App({ offers, comments }: AppProps): JSX.Element {
         </Route>
         <Route path="*" element={< NotFound />} />
       </Routes>
-    </ BrowserRouter>
+    </HistoryRouter>
   );
 }
 
