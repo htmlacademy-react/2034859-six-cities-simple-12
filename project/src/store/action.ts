@@ -3,6 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../consts';
 import { Offer } from '../types/offer';
 import { SortData } from '../types/sortData';
 import { UserData } from '../types/userData';
+import { Comment } from '../types/comment';
 
 
 export const changeActiveCity = createAction('city/changeActiveCity', (currentCity: string) => ({
@@ -35,6 +36,8 @@ export const clearOffer = createAction('api/clearOffer');
 export const setTrueLoadOfferStatus = createAction('api/setTrueLoadOfferStatus');
 
 export const loadNearByOffer = createAction<Offer[]>('api/loadNearByOffer');
+
+export const loadComments = createAction<Comment[]>('api/loadComments');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 

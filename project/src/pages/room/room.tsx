@@ -1,4 +1,3 @@
-import { Comment } from '../../types/comment';
 import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/commentForm/commentForm';
 import ListOfComments from '../../components/listOfComments/listOfComments';
@@ -12,11 +11,10 @@ import { clearOffer } from '../../store/action';
 import LoadSpinner from '../../components/loadSpinner/loadSpinner';
 
 type RoomProps = {
-  comments: Comment[];
   isLogged: boolean;
 };
 
-function Room({ comments, isLogged }: RoomProps): JSX.Element {
+function Room({ isLogged }: RoomProps): JSX.Element {
 
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -30,6 +28,7 @@ function Room({ comments, isLogged }: RoomProps): JSX.Element {
 
   const offer = useAppSelector((state) => state.activeOffer);
   const offersNearByOffer = useAppSelector((state) => state.nearByOffer);
+  const comments = useAppSelector((state) => state.comments);
   const isOfferLoad = useAppSelector((state) => state.isOfferLoad);
 
   if (!isOfferLoad) {
@@ -125,7 +124,7 @@ function Room({ comments, isLogged }: RoomProps): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <ListOfComments comments={comments} />
-              {isLogged ? <CommentForm /> : ''}
+              {isLogged ? <CommentForm idOfOffer={Number(params.id)}/> : ''}
             </section>
           </div>
         </div>

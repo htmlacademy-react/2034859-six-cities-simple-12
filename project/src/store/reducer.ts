@@ -1,10 +1,25 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeActiveCity, getOffersFromCity, changeActiveCard, changeTypeOfSorting, sortOffers, loadOffers, requireAuthorization, setUserData, loadOffer, clearOffer, setTrueLoadOfferStatus, loadNearByOffer } from './action';
+import {
+  changeActiveCity,
+  getOffersFromCity,
+  changeActiveCard,
+  changeTypeOfSorting,
+  sortOffers,
+  loadOffers,
+  requireAuthorization,
+  setUserData,
+  loadOffer,
+  clearOffer,
+  setTrueLoadOfferStatus,
+  loadNearByOffer,
+  loadComments
+} from './action';
 import { Offer } from '../types/offer';
 import { sortFunction } from '../utils/sortFunction';
 import { SortData } from '../types/sortData';
 import { AuthorizationStatus, SortInfo } from '../consts';
 import { UserData } from '../types/userData';
+import { Comment } from '../types/comment';
 
 const defaultCity = 'Paris';
 const defaultSearch = 'Popular';
@@ -23,6 +38,7 @@ type InitialState = {
   userData: UserData | null;
   activeOffer: Offer | null;
   nearByOffer: Offer[];
+  comments: Comment[];
 };
 
 const initialState: InitialState = {
@@ -38,6 +54,7 @@ const initialState: InitialState = {
   userData: null,
   activeOffer: null,
   nearByOffer:  [],
+  comments: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -79,6 +96,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadNearByOffer, (state, action) => {
       state.nearByOffer = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
     })
     .addCase(clearOffer, (state) => {
       state.activeOffer = null;
