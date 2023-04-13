@@ -1,24 +1,42 @@
-import { Offer } from '../../types/offer';
-import { Comment } from '../../types/comment';
 import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/commentForm/commentForm';
 import ListOfComments from '../../components/listOfComments/listOfComments';
 import Map from '../../components/map/map';
 import ListOfOffers from '../../components/listOfOffers/listOfOffers';
+import { fetchOfferAction } from '../../store/api-actions';
+import { store } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { clearOffer } from '../../store/action';
+import LoadSpinner from '../../components/loadSpinner/loadSpinner';
 
 type RoomProps = {
-  offers: Offer[];
-  comments: Comment[];
+  isLogged: boolean;
 };
 
-function Room({ offers, comments }: RoomProps): JSX.Element {
+function Room({ isLogged }: RoomProps): JSX.Element {
 
+  const dispatch = useAppDispatch();
   const params = useParams();
-  const offer = offers.find((item) => item.id === Number(params.id));
 
-  const offersNear = offers.slice(0, 3);
+  useEffect(() => {
+    store.dispatch(fetchOfferAction(Number(params.id)));
+    return () => {
+      dispatch(clearOffer());
+    };
+  }, [params]);
 
-  if (offer === undefined) {
+  const offer = useAppSelector((state) => state.activeOffer);
+  const offersNearByOffer = useAppSelector((state) => state.nearByOffer);
+  const comments = useAppSelector((state) => state.comments);
+  const isOfferLoad = useAppSelector((state) => state.isOfferLoad);
+
+  if (!isOfferLoad) {
+    return (
+      <LoadSpinner />
+    );
+  }
+  if (offer === null) {
     return (
       <div>Упс! Такой комнаты нет в базе</div>
     );
@@ -34,8 +52,8 @@ function Room({ offers, comments }: RoomProps): JSX.Element {
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {offer.images.map((link) => (
-              <div className="property__image-wrapper" key={link[link.length - 1]}>
-                <img className="property__image" src={`${link}.jpg`} alt="Studio" />
+              <div className="property__image-wrapper" key={link}>
+                <img className="property__image" src={link} alt="Studio" />
               </div>))}
           </div>
         </div>
@@ -99,19 +117,19 @@ function Room({ offers, comments }: RoomProps): JSX.Element {
               </div>
               <div className="property__description">
                 <p className="property__text">
-                  {offer?.description}
+                  {offer.description}
                 </p>
               </div>
             </div>
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <ListOfComments comments={comments} />
-              <CommentForm />
+              {isLogged ? <CommentForm idOfOffer={Number(params.id)}/> : ''}
             </section>
           </div>
         </div>
-        <Map city={offers[0].city}
-          offers={offersNear}
+        <Map city={offersNearByOffer[0].city}
+          offers={offersNearByOffer}
           cssClassOfMap={'property__map'}
         />
       </section>
@@ -119,7 +137,7 @@ function Room({ offers, comments }: RoomProps): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <ListOfOffers offers={offersNear} cssClassOfCard={'near-places'}/>
+            <ListOfOffers offers={offersNearByOffer} cssClassOfCard={'near-places'} />
           </div>
         </section>
       </div>

@@ -1,17 +1,33 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeActiveCity, getOffersFromCity, changeActiveCard, changeTypeOfSorting, sortOffers, loadOffers, requireAuthorization, setUserData } from './action';
+import {
+  changeActiveCity,
+  getOffersFromCity,
+  changeActiveCard,
+  changeTypeOfSorting,
+  sortOffers,
+  loadOffers,
+  requireAuthorization,
+  setUserData,
+  loadOffer,
+  clearOffer,
+  setTrueLoadOfferStatus,
+  loadNearByOffer,
+  loadComments
+} from './action';
 import { Offer } from '../types/offer';
 import { sortFunction } from '../utils/sortFunction';
 import { SortData } from '../types/sortData';
 import { AuthorizationStatus, SortInfo } from '../consts';
 import { UserData } from '../types/userData';
+import { Comment } from '../types/comment';
 
 const defaultCity = 'Paris';
 const defaultSearch = 'Popular';
 const defaultTypeOfSorting = SortInfo[0];
 
 type InitialState = {
-  isDataLoad: boolean;
+  isOffersLoad: boolean;
+  isOfferLoad: boolean;
   currentCity: string;
   currentOffers: Offer[];
   defaultSortOffers: Offer[];
@@ -20,10 +36,14 @@ type InitialState = {
   allOffers: Offer[];
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
+  activeOffer: Offer | null;
+  nearByOffer: Offer[];
+  comments: Comment[];
 };
 
 const initialState: InitialState = {
-  isDataLoad: false,
+  isOffersLoad: false,
+  isOfferLoad: false,
   currentCity: defaultCity,
   currentOffers: [],
   defaultSortOffers: [],
@@ -32,6 +52,9 @@ const initialState: InitialState = {
   allOffers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
+  activeOffer: null,
+  nearByOffer:  [],
+  comments: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -62,7 +85,24 @@ const reducer = createReducer(initialState, (builder) => {
       const initialOffers = state.allOffers.filter((item) => item.city.name === state.currentCity);
       state.defaultSortOffers = initialOffers;
       state.currentOffers = initialOffers;
-      state.isDataLoad = true;
+      state.isOffersLoad = true;
+    })
+    .addCase(loadOffer, (state, action) => {
+      state.activeOffer = action.payload;
+      state.isOfferLoad = true;
+    })
+    .addCase(setTrueLoadOfferStatus, (state) => {
+      state.isOfferLoad = true;
+    })
+    .addCase(loadNearByOffer, (state, action) => {
+      state.nearByOffer = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(clearOffer, (state) => {
+      state.activeOffer = null;
+      state.isOfferLoad = false;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
