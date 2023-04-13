@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Offer } from '../types/offer';
-import { loadOffers, redirectToRoute, requireAuthorization, setUserData } from './action';
+import { loadOffers, loadOffer, redirectToRoute, requireAuthorization, setUserData, setTrueLoadOfferStatus, loadNearByOffer } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../consts';
 import { AuthData } from '../types/authData';
 import { UserData } from '../types/userData';
@@ -17,6 +17,25 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(loadOffers(data));
+  },
+);
+
+
+export const fetchOfferAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffer',
+  async (id, { dispatch, extra: api }) => {
+    try {
+      const offer = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      const nearOffers = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      dispatch(loadNearByOffer(nearOffers.data));
+      dispatch(loadOffer(offer.data));
+    } catch {
+      dispatch(setTrueLoadOfferStatus());
+    }
   },
 );
 

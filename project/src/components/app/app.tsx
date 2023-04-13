@@ -6,23 +6,22 @@ import NotFound from '../notFound/notFound';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../consts';
 import ScrollToTop from '../scrollToTop/scrollToTop';
-import { Offer } from '../../types/offer';
 import { Comment } from '../../types/comment';
 import { useAppSelector } from '../../hooks';
 import { useEffect, useState } from 'react';
 import HistoryRouter from '../historyRoute/historyRoute';
 import browserHistory from '../../browser-history';
+import LoadSpinner from '../loadSpinner/loadSpinner';
 
 type AppProps = {
-  offers: Offer[];
   comments: Comment[];
 };
 
 
-function App({ offers, comments }: AppProps): JSX.Element {
+function App({ comments }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const isDataLoad = useAppSelector((state) => state.isDataLoad);
+  const isOffersLoad = useAppSelector((state) => state.isOffersLoad);
   const [isLogged, setIsLogged] = useState((false));
 
   useEffect(() => {
@@ -33,12 +32,9 @@ function App({ offers, comments }: AppProps): JSX.Element {
     }
   }, [authorizationStatus]);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoad) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || !isOffersLoad) {
     return (
-      <div className="load-area">
-        <div className="load-area__spinner">
-        </div>
-      </div>
+      <LoadSpinner/>
     );
   }
   return (
@@ -47,7 +43,7 @@ function App({ offers, comments }: AppProps): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<Layout isLogged={isLogged} />}>
           <Route index element={<Main />} />
-          <Route path={AppRoute.Room} element={<Room offers={offers} comments={comments} />} />
+          <Route path={AppRoute.Room} element={<Room comments={comments} isLogged={isLogged}/>} />
           <Route path={AppRoute.Login} element={<Login />} />
         </Route>
         <Route path="*" element={< NotFound />} />

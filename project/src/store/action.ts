@@ -26,7 +26,15 @@ export const sortOffers = createAction('sort/sortOffers', (sortData: SortData) =
   payload: sortData,
 }));
 
-export const loadOffers = createAction<Offer[]>('api/loadOffer');
+export const loadOffers = createAction<Offer[]>('api/loadOffers');
+
+export const loadOffer = createAction<Offer>('api/loadOffer');
+
+export const clearOffer = createAction('api/clearOffer');
+
+export const setTrueLoadOfferStatus = createAction('api/setTrueLoadOfferStatus');
+
+export const loadNearByOffer = createAction<Offer[]>('api/loadNearByOffer');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
