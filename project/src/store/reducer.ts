@@ -53,14 +53,15 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
   activeOffer: null,
-  nearByOffer:  [],
+  nearByOffer: [],
   comments: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(changeActiveCity, (state, action) => {
-    state.currentCity = action.payload;
-  })
+  builder
+    .addCase(changeActiveCity, (state, action) => {
+      state.currentCity = action.payload;
+    })
     .addCase(getOffersFromCity, (state) => {
       const offersFromCity = state.allOffers.filter((item) => item.city.name === state.currentCity);
       state.currentOffers = offersFromCity;

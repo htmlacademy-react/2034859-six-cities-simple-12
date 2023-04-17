@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeActiveCity, getOffersFromCity } from '../../store/action';
 import { CITIES } from '../../consts';
 import CitiesNav from '../../components/citiesNav/citiesNav';
+import { memo } from 'react';
 
 
 function Main(): JSX.Element {
@@ -45,4 +46,4 @@ function Main(): JSX.Element {
   );
 }
 
-export default Main;
+export default memo(Main);
