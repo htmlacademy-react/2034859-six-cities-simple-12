@@ -5,6 +5,7 @@ import { changeActiveCity, getOffersFromCity } from '../../store/action';
 import { CITIES } from '../../consts';
 import CitiesNav from '../../components/citiesNav/citiesNav';
 import { memo } from 'react';
+import EmptyOffersSection from '../../components/emptyOffersSection/emptyOffersSection';
 
 
 function Main(): JSX.Element {
@@ -20,9 +21,9 @@ function Main(): JSX.Element {
     dispatch(changeActiveCity(city));
     dispatch(getOffersFromCity());
   };
-
+  const isOffersEmpty = currentOffers.length === 0;
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index ${isOffersEmpty ? 'page__main--index-empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
@@ -30,17 +31,21 @@ function Main(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <OffersMainSection />
-          </section>
-          <div className="cities__right-section">
-            <Map city={currentOffers[0].city}
-              offers={currentOffers}
-              cssClassOfMap={'cities__map'}
-            />
-          </div>
-        </div>
+        {
+          isOffersEmpty ?
+            <EmptyOffersSection currentCity={currentCity} /> :
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <OffersMainSection />
+              </section>
+              <div className="cities__right-section">
+                <Map city={currentOffers[0].city}
+                  offers={currentOffers}
+                  cssClassOfMap={'cities__map'}
+                />
+              </div>
+            </div>
+        }
       </div>
     </main>
   );
