@@ -1,9 +1,13 @@
 import { Offer } from '../types/offer';
 
-
-export const sortFunction = (offers: Offer[], sortingValue: keyof Offer, lowToHight: boolean) => {
+export const sort = (
+  offers: Offer[],
+  sortingValue: keyof Offer,
+  lowToHight: boolean
+) => {
+  const newOffers = offers.slice(0);
   if (lowToHight) {
-    return offers.sort((a, b) => {
+    return newOffers.sort((a, b) => {
       if (a[sortingValue] > b[sortingValue]) {
         return 1;
       }
@@ -12,9 +16,8 @@ export const sortFunction = (offers: Offer[], sortingValue: keyof Offer, lowToHi
       }
       return 0;
     });
-  }
-  else {
-    return offers.sort((a, b) => {
+  } else {
+    return newOffers.sort((a, b) => {
       if (a[sortingValue] < b[sortingValue]) {
         return 1;
       }

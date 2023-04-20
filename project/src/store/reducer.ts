@@ -12,14 +12,17 @@ import {
   clearOffer,
   setTrueLoadOfferStatus,
   loadNearByOffer,
-  loadComments
+  loadComments,
+  changeFormData,
 } from './action';
 import { Offer } from '../types/offer';
-import { sortFunction } from '../utils/sortFunction';
+import { sort } from '../utils/sort';
 import { SortData } from '../types/sortData';
 import { AuthorizationStatus, SortInfo } from '../consts';
 import { UserData } from '../types/userData';
 import { Comment } from '../types/comment';
+import { FormData } from '../types/formData';
+import { getIsCommentValid } from '../utils/isCommentValid';
 
 const defaultCity = 'Paris';
 const defaultSearch = 'Popular';
@@ -39,6 +42,7 @@ type InitialState = {
   activeOffer: Offer | null;
   nearByOffer: Offer[];
   comments: Comment[];
+  formData: FormData;
 };
 
 const initialState: InitialState = {
@@ -55,6 +59,13 @@ const initialState: InitialState = {
   activeOffer: null,
   nearByOffer: [],
   comments: [],
+  formData: {
+    comment: '',
+    rating: 0,
+    isValid: false,
+    isDisabled: false,
+    isErrorActive: false,
+  },
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -63,7 +74,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.currentCity = action.payload;
     })
     .addCase(getOffersFromCity, (state) => {
-      const offersFromCity = state.allOffers.filter((item) => item.city.name === state.currentCity);
+      const offersFromCity = state.allOffers.filter(
+        (item) => item.city.name === state.currentCity
+      );
       state.currentOffers = offersFromCity;
       state.defaultSortOffers = offersFromCity;
     })
@@ -78,12 +91,18 @@ const reducer = createReducer(initialState, (builder) => {
       if (sortData.name === defaultSearch) {
         state.currentOffers = state.defaultSortOffers;
       } else {
-        state.currentOffers = sortFunction(state.currentOffers, sortData.sortingValue, sortData.lowToHight);
+        state.currentOffers = sort(
+          state.currentOffers,
+          sortData.sortingValue,
+          sortData.lowToHight
+        );
       }
     })
     .addCase(loadOffers, (state, action) => {
       state.allOffers = action.payload;
-      const initialOffers = state.allOffers.filter((item) => item.city.name === state.currentCity);
+      const initialOffers = state.allOffers.filter(
+        (item) => item.city.name === state.currentCity
+      );
       state.defaultSortOffers = initialOffers;
       state.currentOffers = initialOffers;
       state.isOffersLoad = true;
@@ -100,6 +119,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
+    })
+    .addCase(changeFormData, (state, action) => {
+      let newFormData = state.formData;
+      newFormData = Object.assign(newFormData, action.payload);
+      if(action.payload.comment || action.payload.rating) {
+        newFormData.isErrorActive = false;
+      }
+      state.formData = newFormData;
+      const isValid = getIsCommentValid({comment: state.formData.comment, rating: state.formData.rating});
+      state.formData.isValid = isValid;
     })
     .addCase(clearOffer, (state) => {
       state.activeOffer = null;

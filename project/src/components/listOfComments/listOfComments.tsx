@@ -8,10 +8,11 @@ type ListOfCommentsProps = {
 function ListOfComments({ comments }: ListOfCommentsProps): JSX.Element {
   return (
     <ul className="reviews__list">
-      {comments.map((item) => <CommentElement comment={item} key={item.id} />)}
+      {comments.map((item) => (
+        <CommentElement comment={item} key={item.id} />
+      ))}
     </ul>
   );
 }
-
 
 export default ListOfComments;

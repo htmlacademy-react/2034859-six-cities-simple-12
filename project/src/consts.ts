@@ -10,7 +10,7 @@ export const SortInfo : SortData[] = [
   { name: 'Popular', sortingValue: 'rating', lowToHight: true },
   { name: 'Price: low to hight', sortingValue: 'price', lowToHight: true},
   { name: 'Price: high to low', sortingValue: 'price', lowToHight: false },
-  { name: 'Top rated first', sortingValue: 'rating', lowToHight: true },
+  { name: 'Top rated first', sortingValue: 'rating', lowToHight: false },
 ];
 
 export enum StylesOfPage {
@@ -46,3 +46,31 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const InputsSetting = [
+  {
+    value: 5,
+    id: '5-stars',
+    title: 'perfect',
+  },
+  {
+    value: 4,
+    id: '4-stars',
+    title: 'good',
+  },
+  {
+    value: 3,
+    id: '3-stars',
+    title: 'not bad',
+  },
+  {
+    value: 2,
+    id: '2-stars',
+    title: 'badly',
+  },
+  {
+    value: 1,
+    id: '1-star',
+    title: 'terribly',
+  },
+];
