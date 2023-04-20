@@ -21,13 +21,11 @@ function Layout({ isLogged }: LayoutProps): JSX.Element {
   };
 
   return (
-
     <div className={pageStyle(pathname)}>
       <Header isNavNeed={pathname !== AppRoute.Login} isLogged={isLogged} />
       <Outlet />
     </div>
   );
 }
-
 
 export default Layout;

@@ -2,25 +2,31 @@ import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { changeActiveCard } from '../../store/action';
+import { getRating } from '../../utils/rating';
 
 type CardProps = {
   offer: Offer;
   cssClassOfCard: string;
 };
 
-
 function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <article onMouseOver={() => dispatch(changeActiveCard(offer))} onMouseOut={() => dispatch(changeActiveCard(null))} className={`${cssClassOfCard}__card place-card`}>
-      {offer.isPremium ?
+    <article
+      onMouseOver={() => dispatch(changeActiveCard(offer))}
+      onMouseOut={() => dispatch(changeActiveCard(null))}
+      className={`${cssClassOfCard}__card place-card`}
+    >
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
-        : ''}
-      <div className={`${cssClassOfCard}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+      )}
+      <div
+        className={`${cssClassOfCard}__image-wrapper place-card__image-wrapper`}
+      >
+        <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -28,7 +34,7 @@ function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
             height="200"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -39,7 +45,7 @@ function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: getRating(offer) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -49,9 +55,7 @@ function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
         <p className="place-card__type">Apartment</p>
       </div>
     </article>
-
   );
 }
-
 
 export default Card;

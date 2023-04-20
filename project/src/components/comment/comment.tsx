@@ -1,4 +1,5 @@
 import { Comment } from '../../types/comment';
+import { getRating } from '../../utils/rating';
 
 type CommentProps = {
   comment: Comment;
@@ -7,7 +8,7 @@ type CommentProps = {
 function CommentElement({ comment }: CommentProps): JSX.Element {
 
   const styles = {
-    width: `${comment.rating * 20}%`
+    width: getRating(comment),
   };
   return (
     <li className="reviews__item" key={comment.id}>

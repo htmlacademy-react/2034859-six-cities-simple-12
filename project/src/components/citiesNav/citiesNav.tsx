@@ -10,9 +10,9 @@ function CitiesNav({ cities, currentCity, onChangeCity }: CitiesNavProps): JSX.E
     <ul className="locations__list tabs__list">
       {cities.map((city) => (
         <li className="locations__item" key={city}>
-          <a className={`locations__item-link tabs__item${currentCity === city ? ' tabs__item--active' : ''}`} onClick={() => onChangeCity(city)}>
+          <div style={{cursor: 'pointer'}} className={`locations__item-link tabs__item${currentCity === city ? ' tabs__item--active' : ''}`} onClick={() => onChangeCity(city)}>
             <span>{city}</span>
-          </a>
+          </div>
         </li>))}
     </ul>
   );

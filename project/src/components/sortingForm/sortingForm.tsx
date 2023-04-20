@@ -17,19 +17,33 @@ function SortingForm(): JSX.Element {
     setIsListOpened(false);
   };
 
-
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={()=>setIsListOpened(!isListOpened)}>
+      <span
+        className="places__sorting-type"
+        tabIndex={0}
+        onClick={() => setIsListOpened(!isListOpened)}
+      >
         {typeOfSorting.name}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isListOpened ? ' places__options--opened' : ''}`}>
+      <ul
+        className={`places__options places__options--custom ${
+          isListOpened ? ' places__options--opened' : ''
+        }`}
+      >
         {SortInfo.map((item) => (
-          <li className={`places__option${item.name === typeOfSorting.name ? ' places__option--active' : ''}`} tabIndex={0} key={item.name} onClick={()=>onClickTypesOfSort(item)}>
+          <li
+            className={`places__option${
+              item.name === typeOfSorting.name ? ' places__option--active' : ''
+            }`}
+            tabIndex={0}
+            key={item.name}
+            onClick={() => onClickTypesOfSort(item)}
+          >
             {item.name}
           </li>
         ))}

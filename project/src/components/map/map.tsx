@@ -7,14 +7,19 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
 
-
 type MapProps = {
   city: City;
   offers: Offer[];
   cssClassOfMap: string;
+  mainOffer?: Offer;
 };
 
-function Map({ city, offers, cssClassOfMap }: MapProps): JSX.Element {
+function Map({
+  city,
+  offers,
+  cssClassOfMap,
+  mainOffer,
+}: MapProps): JSX.Element {
   const selectedOffer = useAppSelector((state) => state.activeCard);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -46,22 +51,33 @@ function Map({ city, offers, cssClassOfMap }: MapProps): JSX.Element {
     if (map) {
       offers.forEach((offer) => {
         leaflet
-          .marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
-          }, {
-            icon: (selectedOffer?.id && offer.id === selectedOffer.id)
-              ? currentCustomIcon
-              : defaultCustomIcon,
-          })
+          .marker(
+            {
+              lat: offer.location.latitude,
+              lng: offer.location.longitude,
+            },
+            {
+              icon:
+                (mainOffer || selectedOffer)?.id === offer.id
+                  ? currentCustomIcon
+                  : defaultCustomIcon,
+            }
+          )
           .addTo(markers);
       });
       markers.addTo(map);
     }
-    return (() => {
+    return () => {
       markers.clearLayers();
-    });
-  }, [map, offers, selectedOffer]);
+    };
+  }, [
+    currentCustomIcon,
+    defaultCustomIcon,
+    mainOffer,
+    map,
+    offers,
+    selectedOffer,
+  ]);
 
   return (
     <section className={`${cssClassOfMap} map`}>
@@ -69,6 +85,5 @@ function Map({ city, offers, cssClassOfMap }: MapProps): JSX.Element {
     </section>
   );
 }
-
 
 export default Map;
