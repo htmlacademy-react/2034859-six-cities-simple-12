@@ -4,6 +4,7 @@ import { Offer } from '../types/offer';
 import { SortData } from '../types/sortData';
 import { UserData } from '../types/userData';
 import { Comment } from '../types/comment';
+import { PartialFormData } from '../types/formData';
 
 export const changeActiveCity = createAction(
   'city/changeActiveCity',
@@ -43,6 +44,14 @@ export const clearOffer = createAction('api/clearOffer');
 
 export const setTrueLoadOfferStatus = createAction(
   'api/setTrueLoadOfferStatus'
+);
+
+
+export const changeFormData = createAction(
+  'form/changeFormData',
+  (formData: PartialFormData) => ({
+    payload: formData,
+  })
 );
 
 export const loadNearByOffer = createAction<Offer[]>('api/loadNearByOffer');

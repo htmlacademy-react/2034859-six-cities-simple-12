@@ -1,42 +1,41 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postComment } from '../../store/api-actions';
-import { getIsCommentValid } from '../../utils/isCommentValid';
-import { CommentFormData } from '../../types/commentFormData';
 import { InputsSetting } from '../../consts';
+import { changeFormData } from '../../store/action';
 
 type CommentFormProps = {
   idOfOffer: number;
 };
 function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [commentFormData, setCommentFormData] = useState<CommentFormData>({
-    rating: 0,
-    comment: '',
-  });
-  const [isDataValid, setIsDataValid] = useState(false);
+  const { comment, rating, isValid, isDisabled, isErrorActive } = useAppSelector((state) => state.formData);
   const onChangeText = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentFormData({ ...commentFormData, comment: evt.target.value });
+    dispatch(changeFormData({ comment: evt.target.value }));
   };
   const onChangeRating = (evt: ChangeEvent<HTMLInputElement>) => {
-    setCommentFormData({
-      ...commentFormData,
-      rating: Number(evt.target.value),
-    });
+    dispatch(changeFormData({ rating: Number(evt.target.value) }));
   };
 
+  const [isCommentLoading, setIsCommentLoading] = useState(false);
+
   useEffect(() => {
-    if (getIsCommentValid(commentFormData)) {
-      setIsDataValid(true);
-    } else {
-      setIsDataValid(false);
+    if (isDisabled) {
+      setIsCommentLoading(true);
     }
-  }, [commentFormData]);
+  }, [isDisabled]);
+
+  useEffect(() => {
+    if (isCommentLoading) {
+      setIsCommentLoading(true);
+    }
+  }, [isDisabled,]);
 
   const handleSubmitForm = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    dispatch(postComment({ idOfOffer, commentFormData }));
+    dispatch(postComment({ idOfOffer, commentFormData: { comment, rating } }));
   };
+
   return (
     <form
       onSubmit={handleSubmitForm}
@@ -61,13 +60,14 @@ function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
               value={item.value}
               id={item.id}
               type="radio"
+              disabled={isDisabled}
             />
             <svg
               className="form__star-image"
               width="37"
               height="33"
               style={{
-                fill: item.value <= commentFormData.rating ? '#ff9000' : '',
+                fill: item.value <= rating ? '#ff9000' : '',
               }}
             >
               <use xlinkHref="#icon-star"></use>
@@ -75,13 +75,15 @@ function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
           </label>
         ))}
       </div>
+      {isErrorActive && (<div style={{color: 'red'}}>Упс! Что-то пошло не так, попробуйте еще раз</div>)}
       <textarea
         onChange={onChangeText}
-        value={commentFormData.comment}
+        value={comment}
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={isDisabled}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -92,8 +94,8 @@ function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isDataValid}
-          style={{ cursor: isDataValid ? 'pointer' : 'auto' }}
+          disabled={!isValid || isDisabled}
+          style={{ cursor: isValid ? 'pointer' : 'auto' }}
         >
           Submit
         </button>

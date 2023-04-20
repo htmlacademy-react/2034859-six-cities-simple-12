@@ -13,6 +13,7 @@ import {
   setTrueLoadOfferStatus,
   loadNearByOffer,
   loadComments,
+  changeFormData,
 } from './action';
 import { Offer } from '../types/offer';
 import { sort } from '../utils/sort';
@@ -20,6 +21,8 @@ import { SortData } from '../types/sortData';
 import { AuthorizationStatus, SortInfo } from '../consts';
 import { UserData } from '../types/userData';
 import { Comment } from '../types/comment';
+import { FormData } from '../types/formData';
+import { getIsCommentValid } from '../utils/isCommentValid';
 
 const defaultCity = 'Paris';
 const defaultSearch = 'Popular';
@@ -39,6 +42,7 @@ type InitialState = {
   activeOffer: Offer | null;
   nearByOffer: Offer[];
   comments: Comment[];
+  formData: FormData;
 };
 
 const initialState: InitialState = {
@@ -55,6 +59,13 @@ const initialState: InitialState = {
   activeOffer: null,
   nearByOffer: [],
   comments: [],
+  formData: {
+    comment: '',
+    rating: 0,
+    isValid: false,
+    isDisabled: false,
+    isErrorActive: false,
+  },
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -108,6 +119,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
+    })
+    .addCase(changeFormData, (state, action) => {
+      let newFormData = state.formData;
+      newFormData = Object.assign(newFormData, action.payload);
+      if(action.payload.comment || action.payload.rating) {
+        newFormData.isErrorActive = false;
+      }
+      state.formData = newFormData;
+      const isValid = getIsCommentValid({comment: state.formData.comment, rating: state.formData.rating});
+      state.formData.isValid = isValid;
     })
     .addCase(clearOffer, (state) => {
       state.activeOffer = null;

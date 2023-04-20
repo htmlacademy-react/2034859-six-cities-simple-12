@@ -11,6 +11,7 @@ import {
   setTrueLoadOfferStatus,
   loadNearByOffer,
   loadComments,
+  changeFormData,
 } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../consts';
 import { AuthData } from '../types/authData';
@@ -63,14 +64,17 @@ export const postComment = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('comment/postComment', async (args, { dispatch, extra: api }) => {
-  await api.post<Comment>(
-    `${APIRoute.Comments}/${args.idOfOffer}`,
-    args.commentFormData
-  );
-  const comments = await api.get<Comment[]>(
-    `${APIRoute.Comments}/${args.idOfOffer}`
-  );
-  dispatch(loadComments(comments.data));
+  dispatch(changeFormData({isDisabled: true}));
+  try {
+    const comments = await api.post<Comment[]>(
+      `${APIRoute.Comments}/${args.idOfOffer}`,
+      args.commentFormData
+    );
+    dispatch(loadComments(comments.data));
+    dispatch(changeFormData({comment: '', rating: 0}));
+  } catch {
+    dispatch(changeFormData({isDisabled: false, isErrorActive: true}));
+  }
 });
 
 export const checkAuthAction = createAsyncThunk<
