@@ -9,13 +9,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { clearOffer } from '../../store/action';
 import LoadSpinner from '../../components/loadSpinner/loadSpinner';
+import { getRating } from '../../utils/rating';
 
 type RoomProps = {
   isLogged: boolean;
 };
 
 function Room({ isLogged }: RoomProps): JSX.Element {
-
   const dispatch = useAppDispatch();
   const params = useParams();
 
@@ -24,7 +24,7 @@ function Room({ isLogged }: RoomProps): JSX.Element {
     return () => {
       dispatch(clearOffer());
     };
-  }, [params]);
+  }, [dispatch, params]);
 
   const offer = useAppSelector((state) => state.activeOffer);
   const offersNearByOffer = useAppSelector((state) => state.nearByOffer);
@@ -32,19 +32,14 @@ function Room({ isLogged }: RoomProps): JSX.Element {
   const isOfferLoad = useAppSelector((state) => state.isOfferLoad);
 
   if (!isOfferLoad) {
-    return (
-      <LoadSpinner />
-    );
+    return <LoadSpinner />;
   }
   if (offer === null) {
-    return (
-      <div>Упс! Такой комнаты нет в базе</div>
-    );
+    return <div>Упс! Такой комнаты нет в базе</div>;
   }
   const stylesRating = {
-    width: `${offer.rating * 20}%`
+    width: getRating(offer),
   };
-
 
   return (
     <main className="page__main page__main--property">
@@ -54,26 +49,28 @@ function Room({ isLogged }: RoomProps): JSX.Element {
             {offer.images.map((link) => (
               <div className="property__image-wrapper" key={link}>
                 <img className="property__image" src={link} alt="Studio" />
-              </div>))}
+              </div>
+            ))}
           </div>
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            {offer.isPremium ?
+            {offer.isPremium && (
               <div className="property__mark">
                 <span>Premium</span>
-              </div> : ''}
+              </div>
+            )}
             <div className="property__name-wrapper">
-              <h1 className="property__name">
-                {offer.title}
-              </h1>
+              <h1 className="property__name">{offer.title}</h1>
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
                 <span style={stylesRating}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="property__rating-value rating__value">{offer.rating}</span>
+              <span className="property__rating-value rating__value">
+                {offer.rating}
+              </span>
             </div>
             <ul className="property__features">
               <li className="property__feature property__feature--entire">
@@ -93,51 +90,61 @@ function Room({ isLogged }: RoomProps): JSX.Element {
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
-                {offer.goods.map((item) =>
-                  (
-                    <li className="property__inside-item" key={item}>
-                      {item}
-                    </li>
-                  )
-                )}
+                {offer.goods.map((item) => (
+                  <li className="property__inside-item" key={item}>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="property__host">
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                  <img
+                    className="property__avatar user__avatar"
+                    src={offer.host.avatarUrl}
+                    width="74"
+                    height="74"
+                    alt="Host avatar"
+                  />
                 </div>
-                <span className="property__user-name">
-                  {offer.host.name}
-                </span>
+                <span className="property__user-name">{offer.host.name}</span>
                 <span className="property__user-status">
                   {offer.host.isPro}
                 </span>
               </div>
               <div className="property__description">
-                <p className="property__text">
-                  {offer.description}
-                </p>
+                <p className="property__text">{offer.description}</p>
               </div>
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+              <h2 className="reviews__title">
+                Reviews &middot;
+                <span className="reviews__amount">{comments.length}</span>
+              </h2>
               <ListOfComments comments={comments} />
-              {isLogged ? <CommentForm idOfOffer={Number(params.id)}/> : ''}
+              {isLogged && <CommentForm idOfOffer={Number(params.id)} />}
             </section>
           </div>
         </div>
-        <Map city={offersNearByOffer[0].city}
-          offers={offersNearByOffer}
+        <Map
+          city={offersNearByOffer[0].city}
+          offers={[...offersNearByOffer, offer]}
           cssClassOfMap={'property__map'}
+          mainOffer={offer}
         />
       </section>
       <div className="container">
         <section className="near-places places">
-          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <h2 className="near-places__title">
+            Other places in the neighbourhood
+          </h2>
           <div className="near-places__list places__list">
-            <ListOfOffers offers={offersNearByOffer} cssClassOfCard={'near-places'} />
+            <ListOfOffers
+              offers={offersNearByOffer}
+              cssClassOfCard={'near-places'}
+            />
           </div>
         </section>
       </div>

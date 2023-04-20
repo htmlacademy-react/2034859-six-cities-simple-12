@@ -8,16 +8,13 @@ type NavProps = {
 };
 
 function Nav({ isLogged }: NavProps): JSX.Element {
-
-
   const userData = useAppSelector((state) => state.userData);
 
   const dispatch = useAppDispatch();
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
-        {isLogged ?
-
+        {isLogged ? (
           <>
             <li className="header__nav-item user">
               <div className="header__nav-profile">
@@ -28,28 +25,32 @@ function Nav({ isLogged }: NavProps): JSX.Element {
               </div>
             </li>
             <li className="header__nav-item">
-              <Link className="header__nav-link" onClick={(evt) => {
-                evt.preventDefault();
-                dispatch(logoutAction());
-              } } to={''}
+              <div
+                className="header__nav-link"
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  dispatch(logoutAction());
+                }}
+                style={{ cursor: 'pointer' }}
               >
                 <span className="header__signout">Sign out</span>
-              </Link>
+              </div>
             </li>
           </>
-          :
-
+        ) : (
           <li className="header__nav-item user">
-            <Link to={AppRoute.Login} className="header__nav-link header__nav-link--profile">
+            <Link
+              to={AppRoute.Login}
+              className="header__nav-link header__nav-link--profile"
+            >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__login">Sign in</span>
             </Link>
-          </li>}
+          </li>
+        )}
       </ul>
     </nav>
   );
 }
 
-
 export default Nav;
-

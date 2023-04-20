@@ -13,10 +13,12 @@ import browserHistory from '../../browser-history';
 import LoadSpinner from '../loadSpinner/loadSpinner';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
   const isOffersLoad = useAppSelector((state) => state.isOffersLoad);
-  const [isLogged, setIsLogged] = useState((false));
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -27,9 +29,7 @@ function App(): JSX.Element {
   }, [authorizationStatus]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || !isOffersLoad) {
-    return (
-      <LoadSpinner/>
-    );
+    return <LoadSpinner />;
   }
   return (
     <HistoryRouter history={browserHistory}>
@@ -37,10 +37,10 @@ function App(): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<Layout isLogged={isLogged} />}>
           <Route index element={<Main />} />
-          <Route path={AppRoute.Room} element={<Room isLogged={isLogged}/>} />
+          <Route path={AppRoute.Room} element={<Room isLogged={isLogged} />} />
           <Route path={AppRoute.Login} element={<Login />} />
         </Route>
-        <Route path="*" element={< NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </HistoryRouter>
   );
