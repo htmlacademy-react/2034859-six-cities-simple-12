@@ -1,14 +1,14 @@
 import { useParams } from 'react-router-dom';
-import CommentForm from '../../components/commentForm/commentForm';
-import ListOfComments from '../../components/listOfComments/listOfComments';
+import CommentForm from '../../components/comment-form/comment-form';
+import ListOfComments from '../../components/list-of-comments/list-of-comments';
 import Map from '../../components/map/map';
-import ListOfOffers from '../../components/listOfOffers/listOfOffers';
+import ListOfOffers from '../../components/list-of-offers/list-of-offers';
 import { fetchOfferAction } from '../../store/api-actions';
 import { store } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { clearOffer } from '../../store/action';
-import LoadSpinner from '../../components/loadSpinner/loadSpinner';
+import LoadSpinner from '../../components/load-spinner/load-spinner';
 import { getRating } from '../../utils/rating';
 
 type RoomProps = {

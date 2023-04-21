@@ -14,8 +14,8 @@ import {
   changeFormData,
 } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../consts';
-import { AuthData } from '../types/authData';
-import { UserData } from '../types/userData';
+import { AuthData } from '../types/auth-data';
+import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../utils/token';
 import { Comment } from '../types/comment';
 

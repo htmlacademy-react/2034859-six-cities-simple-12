@@ -17,12 +17,12 @@ import {
 } from './action';
 import { Offer } from '../types/offer';
 import { sort } from '../utils/sort';
-import { SortData } from '../types/sortData';
+import { SortData } from '../types/sort-data';
 import { AuthorizationStatus, SortInfo } from '../consts';
-import { UserData } from '../types/userData';
+import { UserData } from '../types/user-data';
 import { Comment } from '../types/comment';
-import { FormData } from '../types/formData';
-import { getIsCommentValid } from '../utils/isCommentValid';
+import { FormData } from '../types/form-data';
+import { getIsCommentValid } from '../utils/is-comment-valid';
 
 const defaultCity = 'Paris';
 const defaultSearch = 'Popular';

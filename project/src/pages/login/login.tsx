@@ -1,8 +1,8 @@
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { AuthData } from '../../types/authData';
-import { getRandomCities } from '../../utils/randomCities';
+import { AuthData } from '../../types/auth-data';
+import { getRandomCities } from '../../utils/random-cities';
 import { changeActiveCity } from '../../store/action';
 import { AppRoute } from '../../consts';
 import { Link } from 'react-router-dom';
@@ -66,6 +66,7 @@ function Login(): JSX.Element {
                 name="password"
                 placeholder="Password"
                 required
+                pattern=".*(?=.*\d)(?=.*[a-zA-Z]).*"
               />
             </div>
             <button className="login__submit form__submit button" type="submit">

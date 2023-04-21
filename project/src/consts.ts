@@ -1,4 +1,4 @@
-import { SortData } from './types/sortData';
+import { SortData } from './types/sort-data';
 
 export enum AppRoute {
   Main = '/',

@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../hooks';
-import ListOfOffers from '../listOfOffers/listOfOffers';
-import SortingForm from '../sortingForm/sortingForm';
+import ListOfOffers from '../list-of-offers/list-of-offers';
+import SortingForm from '../sorting-form/sorting-form';
 
 function OffersMainSection(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
