@@ -16,7 +16,6 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
-
   const isOffersLoad = useAppSelector((state) => state.isOffersLoad);
   const [isLogged, setIsLogged] = useState(false);
 
@@ -38,7 +37,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Main} element={<Layout isLogged={isLogged} />}>
           <Route index element={<Main />} />
           <Route path={AppRoute.Room} element={<Room isLogged={isLogged} />} />
-          <Route path={AppRoute.Login} element={<Login />} />
+          <Route path={AppRoute.Login} element={<Login isLogged={isLogged} />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

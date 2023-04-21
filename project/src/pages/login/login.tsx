@@ -1,17 +1,27 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { getRandomCities } from '../../utils/random-cities';
-import { changeActiveCity } from '../../store/action';
+import { changeActiveCity, redirectToRoute } from '../../store/action';
 import { AppRoute } from '../../consts';
 import { Link } from 'react-router-dom';
 import { getOffersFromCity } from '../../store/action';
-function Login(): JSX.Element {
+
+type LoginProps = {
+  isLogged: boolean;
+};
+
+function Login({ isLogged }: LoginProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [dispatch, isLogged]);
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -34,7 +44,6 @@ function Login(): JSX.Element {
     dispatch(changeActiveCity(city));
     dispatch(getOffersFromCity());
   };
-
   return (
     <main className="page__main page__main--login">
       <div className="page__login-container container">

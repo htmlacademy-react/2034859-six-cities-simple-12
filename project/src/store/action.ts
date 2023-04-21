@@ -24,8 +24,8 @@ export const changeActiveCard = createAction(
 
 export const changeTypeOfSorting = createAction(
   'sort/changeTypeOfSorting',
-  (type: SortData) => ({
-    payload: type,
+  (sortData: SortData) => ({
+    payload: sortData,
   })
 );
 
@@ -64,8 +64,8 @@ export const requireAuthorization = createAction<AuthorizationStatus>(
 
 export const setUserData = createAction(
   'user/setUserData',
-  (type: UserData) => ({
-    payload: type,
+  (user: UserData) => ({
+    payload: user,
   })
 );
 
@@ -75,3 +75,8 @@ export const redirectToRoute = createAction(
     payload: redirect,
   })
 );
+
+export const setServerError = createAction('api/setServerError',
+  (isError: boolean) => ({
+    payload: isError,
+  }));

@@ -6,9 +6,9 @@ export enum AppRoute {
   Login = '/login',
 }
 
-export const SortInfo : SortData[] = [
+export const SortInfo: SortData[] = [
   { name: 'Popular', sortingValue: 'rating', lowToHight: true },
-  { name: 'Price: low to hight', sortingValue: 'price', lowToHight: true},
+  { name: 'Price: low to hight', sortingValue: 'price', lowToHight: true },
   { name: 'Price: high to low', sortingValue: 'price', lowToHight: false },
   { name: 'Top rated first', sortingValue: 'rating', lowToHight: false },
 ];
@@ -19,9 +19,9 @@ export enum StylesOfPage {
   Login = 'page page--gray page--login',
 }
 
-export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT = './img/pin.svg';
 
-export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT = './img/pin-active.svg';
 
 
 export const CITIES = [
@@ -74,3 +74,21 @@ export const InputsSetting = [
     title: 'terribly',
   },
 ];
+
+
+export const Mounths = [
+  '',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+

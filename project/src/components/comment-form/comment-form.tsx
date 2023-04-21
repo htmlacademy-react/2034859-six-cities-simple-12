@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postComment } from '../../store/api-actions';
 import { InputsSetting } from '../../consts';
@@ -15,21 +15,8 @@ function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
   };
   const onChangeRating = (evt: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeFormData({ rating: Number(evt.target.value) }));
+
   };
-
-  const [isCommentLoading, setIsCommentLoading] = useState(false);
-
-  useEffect(() => {
-    if (isDisabled) {
-      setIsCommentLoading(true);
-    }
-  }, [isDisabled]);
-
-  useEffect(() => {
-    if (isCommentLoading) {
-      setIsCommentLoading(true);
-    }
-  }, [isDisabled,]);
 
   const handleSubmitForm = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
@@ -60,6 +47,7 @@ function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
               value={item.value}
               id={item.id}
               type="radio"
+              checked={false}
               disabled={isDisabled}
             />
             <svg
@@ -75,7 +63,7 @@ function CommentForm({ idOfOffer }: CommentFormProps): JSX.Element {
           </label>
         ))}
       </div>
-      {isErrorActive && (<div style={{color: 'red'}}>Упс! Что-то пошло не так, попробуйте еще раз</div>)}
+      {isErrorActive && (<div style={{ color: 'red' }}>Упс! Что-то пошло не так, попробуйте еще раз</div>)}
       <textarea
         onChange={onChangeText}
         value={comment}

@@ -1,4 +1,5 @@
 import { Comment } from '../../types/comment';
+import { getHumanizeDate } from '../../utils/date';
 import { getRating } from '../../utils/rating';
 
 type CommentProps = {
@@ -6,7 +7,7 @@ type CommentProps = {
 };
 
 function CommentElement({ comment }: CommentProps): JSX.Element {
-
+  const date = getHumanizeDate(comment.date);
   const styles = {
     width: getRating(comment),
   };
@@ -30,7 +31,7 @@ function CommentElement({ comment }: CommentProps): JSX.Element {
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime={comment.date}>{comment.date}</time>
+        <time className="reviews__time" dateTime={comment.date }>{date}</time>
       </div>
     </li>
   );
