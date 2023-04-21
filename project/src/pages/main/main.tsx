@@ -1,11 +1,11 @@
 import Map from '../../components/map/map';
-import OffersMainSection from '../../components/offersMainSection/offersMainSection';
+import OffersMainSection from '../../components/offers-main-section/offers-main-section';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeActiveCity, getOffersFromCity } from '../../store/action';
 import { CITIES } from '../../consts';
-import CitiesNav from '../../components/citiesNav/citiesNav';
+import CitiesNav from '../../components/cities-nav/cities-nav';
 import { memo } from 'react';
-import EmptyOffersSection from '../../components/emptyOffersSection/emptyOffersSection';
+import EmptyOffersSection from '../../components/empty-offers-section/empty-offers-section';
 
 function Main(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);

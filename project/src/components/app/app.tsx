@@ -2,15 +2,15 @@ import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import Layout from '../layout/layot';
-import NotFound from '../notFound/notFound';
+import NotFound from '../not-found/not-found';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../consts';
-import ScrollToTop from '../scrollToTop/scrollToTop';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { useAppSelector } from '../../hooks';
 import { useEffect, useState } from 'react';
-import HistoryRouter from '../historyRoute/historyRoute';
+import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import LoadSpinner from '../loadSpinner/loadSpinner';
+import LoadSpinner from '../load-spinner/load-spinner';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(

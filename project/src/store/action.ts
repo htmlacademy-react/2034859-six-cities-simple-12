@@ -1,10 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AppRoute, AuthorizationStatus } from '../consts';
 import { Offer } from '../types/offer';
-import { SortData } from '../types/sortData';
-import { UserData } from '../types/userData';
+import { SortData } from '../types/sort-data';
+import { UserData } from '../types/user-data';
 import { Comment } from '../types/comment';
-import { PartialFormData } from '../types/formData';
+import { PartialFormData } from '../types/form-data';
 
 export const changeActiveCity = createAction(
   'city/changeActiveCity',
