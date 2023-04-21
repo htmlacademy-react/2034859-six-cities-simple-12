@@ -32,7 +32,7 @@ function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
             src={offer.previewImage}
             width="260"
             height="200"
-            alt="Place image"
+            alt="Place"
           />
         </Link>
       </div>
@@ -45,14 +45,14 @@ function Card({ offer, cssClassOfCard }: CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: getRating(offer) }}></span>
+            <span style={{ width: getRating(offer, true) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

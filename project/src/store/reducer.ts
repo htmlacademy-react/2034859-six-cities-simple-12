@@ -14,6 +14,7 @@ import {
   loadNearByOffer,
   loadComments,
   changeFormData,
+  setServerError
 } from './action';
 import { Offer } from '../types/offer';
 import { sort } from '../utils/sort';
@@ -29,6 +30,7 @@ const defaultSearch = 'Popular';
 const defaultTypeOfSorting = SortInfo[0];
 
 type InitialState = {
+  isServerError: boolean;
   isOffersLoad: boolean;
   isOfferLoad: boolean;
   currentCity: string;
@@ -46,6 +48,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
+  isServerError: false,
   isOffersLoad: false,
   isOfferLoad: false,
   currentCity: defaultCity,
@@ -139,6 +142,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(setServerError, (state, action) => {
+      state.isServerError = action.payload;
     });
 });
 

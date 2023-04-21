@@ -40,13 +40,12 @@ function Room({ isLogged }: RoomProps): JSX.Element {
   const stylesRating = {
     width: getRating(offer),
   };
-
   return (
     <main className="page__main page__main--property">
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {offer.images.map((link) => (
+            {offer.images.slice(0,6).map((link) => (
               <div className="property__image-wrapper" key={link}>
                 <img className="property__image" src={link} alt="Studio" />
               </div>
